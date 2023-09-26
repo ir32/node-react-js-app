@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Menu from './Menu';
+import Home from './Home';
+import Contact from './Contact';
+import Workshop from './Workshop';
+import Admision from './Admision';
+import ImageUploadForm from './ImageUploadForm'; // Import the ImageUploadForm component
+import Registration from '../src/Login/Registration'; // Import the RegistrationForm component
+import Login from '../src/Login/Login'; // Import the LoginForm component
 
-function App() {
+
+
+const App = () => {
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <Menu />
+
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/workshop" element={<Workshop />} />
+          <Route path="/Admision" element={<Admision />} />
+          <Route path="/upload" element={<ImageUploadForm />} /> {/* New route for ImageUploadForm */}
+          <Route path="/register" element={<Registration />} /> {/* New route for RegistrationForm */}
+          <Route path="/login" element={<Login/>} />
+
+        </Routes>
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;

@@ -15,8 +15,9 @@ import {
   Select,
   MenuItem,
 } from '@mui/material';
-
+//Functional Component
 const Workshop = () => {
+  //State Variables
   const [workshopData, setWorkshopData] = useState([]);
   const [teacherData, setTeacherData] = useState([]);
   const [formData, setFormData] = useState({
@@ -25,12 +26,17 @@ const Workshop = () => {
     location: '',
     teacher: '',
   });
+  /* workshopData stores the data of workshops. 
+    teacherData stores the data of teachers.
+    formData stores the data entered into the form.
+  */
 
+  // Data Fetching with useEffect
   useEffect(() => {
     fetchWorkshopData();
     fetchTeacherData();
   }, []);
-
+  //Data Fetching Functions
   const fetchWorkshopData = async () => {
     try {
       const response = await fetch('http://localhost:3000/workshop');
@@ -50,7 +56,7 @@ const Workshop = () => {
       console.error('Error fetching teacher data:', error);
     }
   };
-
+ //Form Submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -66,6 +72,7 @@ const Workshop = () => {
       if (response.ok) {
         // Data successfully submitted
         // Reset the form
+        // teacher colum is not make api
         setFormData({
           topic: '',
           date: '',
@@ -83,7 +90,7 @@ const Workshop = () => {
       console.error('Error submitting workshop data:', error);
     }
   };
-
+  //Form Input Handling
   const handleChange = (e) => {
     setFormData({
       ...formData,

@@ -22,12 +22,12 @@ const Menu = () => {
           <Link to="/upload" className="menu-link">Upload Image</Link> {/* New link for ImageUploadForm */}
         </li>
         <li className="menu-item">
-        <Link to="/Score_Card" className="menu-link">Score card</Link>
+          <Link to="/student" className="menu-link">Student Registation</Link>
         </li>
-        <li className="menu-item">
+        <li className="menu-item" style={{ float: 'right' }}>
         <Link to="/register" className="menu-link">Registration</Link>
         </li>
-        <li className="menu-item">
+        <li className="menu-item" style={{ float: 'right' }}>
         <Link to="/login" className="menu-link">Login</Link>
         </li>
       </ul>

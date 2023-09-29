@@ -1,6 +1,7 @@
 // Studentregistation.js
 
 import React, { useEffect, useState } from 'react';
+import '../css/style.css';
 
 const Studentregistation = () => {
   const [students, setStudents] = useState([]);
@@ -17,7 +18,7 @@ const Studentregistation = () => {
   return (
     <div>
       <h2>Student Data</h2>
-      <table>
+      <table id='student-table'>
         <thead>
           <tr>
             <th>Student ID</th>
@@ -32,9 +33,9 @@ const Studentregistation = () => {
           </tr>
         </thead>
         <tbody>
-          {students.map((student) => (
+          {students.map((student, index) => (
             <tr key={student.student_id}>
-              <td>{student.student_id}</td>
+              <td>{index + 1}</td>
               <td>{student.first_name}</td>
               <td>{student.last_name}</td>
               <td>{new Date(student.date_of_birth).toLocaleDateString()}</td>

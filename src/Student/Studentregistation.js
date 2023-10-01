@@ -16,6 +16,7 @@ const Studentregistation = () => {
     program: '',
     graduation_year: '',
   });
+  const [successMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
     // Fetch student data from your API or source here
@@ -45,7 +46,17 @@ const Studentregistation = () => {
       .then((data) => {
         console.log('Data submitted successfully:', data);
         // You can add any desired actions here, like closing the modal or refreshing the student list.
-        resetForm(); // Optionally reset the form fields.
+        // Show success message
+        setSuccessMessage('Data submitted successfully.');
+        // Optionally reset the form fields.
+        resetForm();
+        // Refresh the student data
+        fetch('http://localhost:3000/All-student')
+          .then((response) => response.json())
+          .then((data) => setStudents(data))
+          .catch((error) =>
+            console.error('Error fetching student data:', error)
+          );
       })
       .catch((error) => {
         console.error('Error submitting data:', error);
@@ -83,6 +94,9 @@ const Studentregistation = () => {
       >
         Add
       </button>
+      {successMessage && (
+                <div className="alert alert-success">{successMessage}</div>
+              )}
       <div className="modal fade" id="myModal" role="dialog">
         <div className="modal-dialog">
           <div className="modal-content">
@@ -97,7 +111,8 @@ const Studentregistation = () => {
               <h4 className="modal-title">Add Student</h4>
             </div>
             <div className="modal-body">
-              <form onSubmit={handleSubmit}>
+            
+            <form onSubmit={handleSubmit}>
                 <div className="form-group">
                   <label htmlFor="first_name">First Name:</label>
                   <input
@@ -121,7 +136,7 @@ const Studentregistation = () => {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="birth">Date of Birth:	</label>
+                  <label htmlFor="birth">Date of Birth:</label>
                   <input
                     type="text"
                     className="form-control"
@@ -153,12 +168,19 @@ const Studentregistation = () => {
                     onChange={handleInputChange}
                   />
                 </div>
-                <div className='from-group'>
-                    <label hrmlfor="address">Address</label>
-                    <input type='text' id='address' name='address' value={formData.address} onChange={handleInputChange}/>
+                <div className="form-group">
+                  <label htmlFor="address">Address:</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="address"
+                    name="address"
+                    value={formData.address}
+                    onChange={handleInputChange}
+                  />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="phone_number">Program:</label>
+                  <label htmlFor="program">Program:</label>
                   <input
                     type="text"
                     className="form-control"
@@ -167,8 +189,9 @@ const Studentregistation = () => {
                     value={formData.program}
                     onChange={handleInputChange}
                   />
-                </div><div className="form-group">
-                  <label htmlFor="graduation_year">Graduation year:</label>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="graduation_year">Graduation Year:</label>
                   <input
                     type="text"
                     className="form-control"
@@ -178,20 +201,22 @@ const Studentregistation = () => {
                     onChange={handleInputChange}
                   />
                 </div>
-                {/* Add similar form groups for other fields */}
-                <button type="submit" className="btn btn-primary">
-                  Submit
-                </button>
+                <div className="modal-footer">
+                    <button
+                    type="button"
+                    className="btn btn-secondary"
+                    data-dismiss="modal"
+                    >
+                    Close
+                    </button>
+                    <button
+                    type="submit"
+                    className="btn btn-primary"
+                    >
+                    Submit
+                    </button>
+                </div>
               </form>
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-default"
-                data-dismiss="modal"
-              >
-                Close
-              </button>
             </div>
           </div>
         </div>
@@ -209,6 +234,7 @@ const Studentregistation = () => {
             <th>Address</th>
             <th>Program</th>
             <th>Graduation Year</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -225,6 +251,7 @@ const Studentregistation = () => {
               <td>{student.address}</td>
               <td>{student.program}</td>
               <td>{student.graduation_year}</td>
+              <td><button>Edit</button><button>Delete</button></td>
             </tr>
           ))}
         </tbody>

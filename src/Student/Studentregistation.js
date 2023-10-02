@@ -84,6 +84,30 @@ const Studentregistation = () => {
       graduation_year: '',
     });
   };
+  // Delete 
+  const handleDelete = (studentId) => {
+    console.log(studentId);
+    // Perform the delete operation using the studentId
+    fetch(`http://localhost:3000/student/${studentId}`, {
+      method: 'DELETE',
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Data deleted successfully:', data);
+        // Fetch the updated student data or filter the current student list
+        fetch('http://localhost:3000/All-student')
+          .then((response) => response.json())
+          .then((data) => setStudents(data))
+          .catch((error) =>
+            console.error('Error fetching student data:', error)
+          );
+      })
+      .catch((error) => {
+        console.error('Error deleting data:', error);
+        // Handle errors (e.g., display an error message to the user).
+      });
+  } 
+  // End Delete
 
   return (
     <div>
@@ -241,6 +265,7 @@ const Studentregistation = () => {
         </thead>
         <tbody>
           {students.map((student, index) => (
+            
             <tr key={student.student_id}>
               <td>{index + 1}</td>
               <td>{student.first_name}</td>
@@ -253,7 +278,7 @@ const Studentregistation = () => {
               <td>{student.address}</td>
               <td>{student.program}</td>
               <td>{student.graduation_year}</td>
-              <td><button>Edit</button><button>Delete</button></td>
+              <td><button>Edit</button>   <button onClick={() => handleDelete(student.student_id)}>Delete</button></td>
             </tr>
           ))}
         </tbody>

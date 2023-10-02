@@ -67,6 +67,8 @@ const Studentregistation = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     submitFormData();
+    // Close the modal using jQuery
+    window.jQuery('#myModal').modal('hide');
   };
 
   const resetForm = () => {
@@ -138,7 +140,7 @@ const Studentregistation = () => {
                 <div className="form-group">
                   <label htmlFor="birth">Date of Birth:</label>
                   <input
-                    type="text"
+                    type="date"
                     className="form-control"
                     id="date_of_birth"
                     name="date_of_birth"
@@ -158,15 +160,15 @@ const Studentregistation = () => {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="phone_number">Phone Numbe:</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="phone_number"
-                    name="phone_number"
-                    value={formData.phone_number}
-                    onChange={handleInputChange}
-                  />
+                    <label htmlFor="phone_number">Phone Number:</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="phone_number"
+                        name="phone_number"
+                        value={formData.phone_number}
+                        onChange={handleInputChange}
+                    />
                 </div>
                 <div className="form-group">
                   <label htmlFor="address">Address:</label>

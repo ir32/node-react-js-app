@@ -128,6 +128,37 @@ const Studentregistation = () => {
             })
             .catch((error) => console.error('Error fetching student data:', error));
     };
+    const handleEditSubmit = () => {
+        // Prepare the updated student data
+        const updatedStudentData = {
+            first_name: selectedStudent.first_name,
+            last_name: selectedStudent.last_name,
+            date_of_birth: selectedStudent.date_of_birth,
+            email: selectedStudent.email,
+            phone_number: selectedStudent.phone_number,
+            address: selectedStudent.address,
+            program: selectedStudent.program,
+            graduation_year: selectedStudent.graduation_year,
+        };
+    
+        // Send a PUT request to update the student data
+        fetch(`http://localhost:3000/update-student/${selectedStudent.student_id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updatedStudentData),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log('Data updated successfully:', data);
+                // Optionally close the edit modal
+                window.jQuery('#editModal').modal('hide');
+                // Refresh the student data or perform any necessary actions
+                // Fetch updated student data if needed
+            })
+            .catch((error) => console.error('Error updating student data:', error));
+    };
 
     return (
         <div>
@@ -278,15 +309,92 @@ const Studentregistation = () => {
                         </div>
                         <div className="modal-body">
                             {/* Edit student form */}
-                            <form >
+                            <form  onSubmit={handleEditSubmit}>
                                 <div className="form-group">
-                                    <label htmlFor="edit_first_name">First Name:</label>
+                                    <label htmlFor="first_name">First Name:</label>
                                     <input
                                         type="text"
                                         className="form-control"
-                                        id="edit_first_name"
-                                        name="edit_first_name"
+                                        id="first_name"
+                                        name="first_name"
                                         value={selectedStudent ? selectedStudent.first_name : ''}
+                                        onChange={handleEditInputChange}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="last_name">Last Name:</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="last_name"
+                                        name="last_name"
+                                        value={selectedStudent ? selectedStudent.last_name : ''}
+                                        onChange={handleEditInputChange}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="edit_date_of_birth">Date of Birth:</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="date_of_birth"
+                                        name="date_of_birth"
+                                        value={selectedStudent ? selectedStudent.date_of_birth : ''}
+                                        onChange={handleEditInputChange}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="edit_email">Email:</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="email"
+                                        name="email"
+                                        value={selectedStudent ? selectedStudent.email : ''}
+                                        onChange={handleEditInputChange}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="edit_phone_number">Phone:</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="phone_number"
+                                        name="phone_number"
+                                        value={selectedStudent ? selectedStudent.phone_number : ''}
+                                        onChange={handleEditInputChange}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="edit_address">Address:</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="address"
+                                        name="address"
+                                        value={selectedStudent ? selectedStudent.address : ''}
+                                        onChange={handleEditInputChange}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="edit_program">Program:</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="program"
+                                        name="program"
+                                        value={selectedStudent ? selectedStudent.program : ''}
+                                        onChange={handleEditInputChange}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="edit_graduation_year">Graduation Year:</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="graduation_year"
+                                        name="graduation_year"
+                                        value={selectedStudent ? selectedStudent.graduation_year : ''}
                                         onChange={handleEditInputChange}
                                     />
                                 </div>

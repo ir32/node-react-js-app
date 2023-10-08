@@ -2,7 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 import '../css/style.css';
-
+// import * as FileSaver from 'file-saver';
+import XLSX from 'sheetjs-style';
 const Studentregistation = () => {
     const [students, setStudents] = useState([]);
     const [formData, setFormData] = useState({
@@ -32,6 +33,12 @@ const Studentregistation = () => {
             ...formData,
             [e.target.name]: e.target.value,
         });
+    };
+    const handleExportToExcel = () => {
+        const ws = XLSX.utils.json_to_sheet(students);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Students');
+        XLSX.writeFile(wb, 'student_data.xlsx');
     };
 
     const submitFormData = () => {
@@ -171,6 +178,7 @@ const Studentregistation = () => {
             >
                 Add
             </button>
+            <button onClick={handleExportToExcel}>Download</button>
             {successMessage && (
                 <div className="alert alert-success">{successMessage}</div>
             )}

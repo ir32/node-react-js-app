@@ -179,7 +179,7 @@ const Studentregistation = () => {
             >
                 Add
             </button>
-            <button onClick={handleExportToExcel}>Download</button>
+            <button style={{ marginLeft: '5px' }} onClick={handleExportToExcel}><i className="fas fa-download"></i></button>
             {successMessage && (
                 <div className="alert alert-success">{successMessage}</div>
             )}

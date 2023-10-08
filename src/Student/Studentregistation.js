@@ -34,6 +34,7 @@ const Studentregistation = () => {
             [e.target.name]: e.target.value,
         });
     };
+    // excel data
     const handleExportToExcel = () => {
         const ws = XLSX.utils.json_to_sheet(students);
         const wb = XLSX.utils.book_new();

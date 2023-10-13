@@ -40,9 +40,10 @@ const Login = () => {
       const response = await axios.post('http://localhost:3000/login', formData);
       if (response.status === 200) {
         const { username } = response.data;
-        setLoggedInUsername(username);
+        sessionStorage.setItem('loggedInUsername', username); // Set the logged-in username in session storage
         navigate('/dashboard', { replace: true }); // Redirect to the dashboard
         console.log('Login successful');
+        //console.log(username);
       } else {
         setErrorMessage('Login failed. Please check your credentials.');
         console.error('Login failed');

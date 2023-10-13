@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import '../css/style.css';
+import { useNavigate } from 'react-router-dom'; // Import the useNavigate hook
 
 const Login = () => {
+  const navigate = useNavigate(); // Get the navigate function
+
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -38,7 +41,7 @@ const Login = () => {
       if (response.status === 200) {
         const { username } = response.data;
         setLoggedInUsername(username);
-
+        navigate('/dashboard', { replace: true }); // Redirect to the dashboard
         console.log('Login successful');
       } else {
         setErrorMessage('Login failed. Please check your credentials.');

@@ -9,7 +9,7 @@ import ImageUploadForm from './ImageUploadForm'; // Import the ImageUploadForm c
 import Registration from '../src/Login/Registration'; // Import the RegistrationForm component
 import Login from '../src/Login/Login'; // Import the LoginForm component
 import Studentregistation from '../src/Student/Studentregistation';
-
+import Studenttest from '../src/Dashboard/dashboard';
 
 
 const App = () => {
@@ -28,7 +28,7 @@ const App = () => {
           <Route path="/register" element={<Registration />} /> {/* New route for RegistrationForm */}
           <Route path="/login" element={<Login/>} />
           <Route path="/student" element={<Studentregistation />} />
-
+          <Route path="/dashboard" element={<Studenttest />} />
         </Routes>
       </div>
     </Router>

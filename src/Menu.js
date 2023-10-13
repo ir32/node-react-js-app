@@ -24,6 +24,9 @@ const Menu = ({ isLoggedIn }) => {
         <li className="menu-item">
           <Link to="/student" className="menu-link">Student Registration</Link>
         </li>
+        {/* <li className="menu-item">
+          <Link to="/dashboard" className="menu-link">Dashboard</Link>
+        </li> */}
         {isLoggedIn ? null : (
           <li className="menu-item" style={{ float: 'right' }}>
             <Link to="/register" className="menu-link">Registration</Link>

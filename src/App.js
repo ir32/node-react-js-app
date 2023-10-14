@@ -10,7 +10,7 @@ import Registration from '../src/Login/Registration'; // Import the Registration
 import Login from '../src/Login/Login'; // Import the LoginForm component
 import Studentregistation from '../src/Student/Studentregistation';
 import Studenttest from '../src/Dashboard/dashboard';
-
+import Prodcutitem from '../src/products/Productitem';
 
 const App = () => {
   
@@ -29,6 +29,8 @@ const App = () => {
           <Route path="/login" element={<Login/>} />
           <Route path="/student" element={<Studentregistation />} />
           <Route path="/dashboard" element={<Studenttest />} />
+          <Route path="/products" element={<Prodcutitem />} />
+
         </Routes>
       </div>
     </Router>

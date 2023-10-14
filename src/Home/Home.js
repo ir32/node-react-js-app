@@ -5,6 +5,7 @@ import '../css/product.css';
 
 const Home = () => {
   const [products, setProducts] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
     // Fetch data from the API
@@ -16,6 +17,11 @@ const Home = () => {
         console.error('Error fetching data:', error);
       });
   }, []);
+
+  const handleAddToCart = (product) => {
+    console.log('Product added to cart:', product);
+    setCartItems([...cartItems, product]);
+  };
 
   return (
     <div>
@@ -31,12 +37,27 @@ const Home = () => {
             <h3>{product.name}</h3>
             <p>Price: ${parseFloat(product.price).toFixed(2)}</p>
             <div className="button-container">
-              <button className="add-to-cart-button">Add to Cart</button>
+              <button
+                className="add-to-cart-button"
+                onClick={() => handleAddToCart(product)}
+              >
+                Add to Cart
+              </button>
               <button className="buy-button">Buy</button>
             </div>
           </div>
         ))}
       </div>
+
+      <style>
+        {`
+          .product-image {
+            width: 100%;
+            height: 200px; /* Set the desired height for the images */
+            object-fit: cover; /* Adjust how the image fits in the container */
+          }
+        `}
+      </style>
     </div>
   );
 };

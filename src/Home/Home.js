@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../css/style.css';
 import '../css/product.css';
+import Cart from '../Card/Cart'; // Assuming you have a Cart component
+
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
-
+  const [isCartOpen, setIsCartOpen] = useState(false);
+ 
   useEffect(() => {
     // Fetch data from the API
     axios.get('http://localhost:3000/getproducts')
@@ -22,11 +25,25 @@ const Home = () => {
     setCartItems([...cartItems, product]);
   };
 
+  const handleCartOpen = () => {
+    setIsCartOpen(true);
+  };
+
+  const handleCartClose = () => {
+    setIsCartOpen(false);
+  };
+
   return (
     <div>
-           
-      
       <h1>Products</h1>
+      <div className="text-right">
+        <button onClick={handleCartOpen} className="btn btn-primary">
+          Open Cart <span className="glyphicon glyphicon-shopping-cart"></span>
+        </button>
+      </div>
+
+      <Cart cartItems={cartItems} isOpen={isCartOpen} onClose={handleCartClose} />
+      
       <div className="product-grid">
         {products.map((product, index) => (
           <div key={index} className="product-card">
@@ -50,6 +67,8 @@ const Home = () => {
         ))}
       </div>
 
+      
+      
       <style>
         {`
           .product-image {

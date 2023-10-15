@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../css/style.css';
 import '../css/product.css';
-
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
@@ -25,6 +24,8 @@ const Home = () => {
 
   return (
     <div>
+           
+      
       <h1>Products</h1>
       <div className="product-grid">
         {products.map((product, index) => (

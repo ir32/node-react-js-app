@@ -37,6 +37,9 @@ const Menu = ({ isLoggedIn }) => {
             <Link to="/login" className="menu-link">Login</Link>
           </li>
         )}
+        <li className="menu-item">
+        <Link to="/cart" className="menu-link">Cart</Link>
+      </li>
       </ul>
     </nav>
   );

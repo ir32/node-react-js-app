@@ -11,7 +11,7 @@ import Login from '../src/Login/Login'; // Import the LoginForm component
 import Studentregistation from '../src/Student/Studentregistation';
 import Studenttest from '../src/Dashboard/dashboard';
 import Prodcutitem from '../src/products/Productitem';
-
+import Cart from '../src/Card/ProductCart';
 const App = () => {
   
   return (
@@ -30,7 +30,7 @@ const App = () => {
           <Route path="/student" element={<Studentregistation />} />
           <Route path="/dashboard" element={<Studenttest />} />
           <Route path="/products" element={<Prodcutitem />} />
-
+          <Route path="/cart" element={<Cart/>} />
         </Routes>
       </div>
     </Router>

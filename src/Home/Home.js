@@ -103,6 +103,8 @@ const Home = () => {
               </div>
             ))}
             <div>Total Amount: ${cartAmount.toFixed(2)}</div>
+            <button className="buy-button">Buy</button>
+
           </div>
         </div>
       )}

@@ -1,22 +1,11 @@
+// Cart.js
 import React from 'react';
 
-const Cart = ({ cartItems, isOpen, onClose }) => {
-  if (!isOpen) {
-    return null;
-  }
-
+const Cart = ({ onClick, count }) => {
   return (
-    <div>
-      <h2>Cart</h2>
-      <ul>
-        {cartItems.map((item, index) => (
-          <li key={index}>
-            {item.name} - ${parseFloat(item.price).toFixed(2)}
-          </li>
-        ))}
-      </ul>
-      <button onClick={onClose}>Close Cart</button>
-    </div>
+    <button onClick={onClick} className="btn btn-primary">
+      Cart ({count}) <span className="glyphicon glyphicon-shopping-cart"></span>
+    </button>
   );
 };
 

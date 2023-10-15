@@ -1,3 +1,4 @@
+// Home.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../css/style.css';
@@ -7,8 +8,6 @@ import Cart from '../Card/Cart'; // Assuming you have a Cart component
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [addToCartCount, setAddToCartCount] = useState(0); // New state for the count
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [cartAmount, setCartAmount] = useState(0);
 
@@ -33,7 +32,6 @@ const Home = () => {
     } else {
       setCartItems([...cartItems, { ...product, quantity: 1 }]);
     }
-    setAddToCartCount(addToCartCount + 1); // Update the count
   };
 
   const handleCartOpen = () => {
@@ -56,9 +54,7 @@ const Home = () => {
     <div>
       <h1>Products</h1>
       <div className="text-right">
-        <button onClick={handleCartOpen} className="btn btn-primary">
-          Open Cart ({addToCartCount}) <span className="glyphicon glyphicon-shopping-cart"></span>
-        </button>
+        <Cart onClick={handleCartOpen} count={cartItems.length} />
       </div>
 
       {isModalOpen && (

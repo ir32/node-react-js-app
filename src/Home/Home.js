@@ -8,7 +8,8 @@ const Home = () => {
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
- 
+  const [addToCartCount, setAddToCartCount] = useState(0); // New state for the count
+
   useEffect(() => {
     // Fetch data from the API
     axios.get('http://localhost:3000/getproducts')
@@ -23,6 +24,7 @@ const Home = () => {
   const handleAddToCart = (product) => {
     console.log('Product added to cart:', product);
     setCartItems([...cartItems, product]);
+    setAddToCartCount(addToCartCount + 1); // Update the count
   };
 
   const handleCartOpen = () => {
@@ -38,7 +40,7 @@ const Home = () => {
       <h1>Products</h1>
       <div className="text-right">
         <button onClick={handleCartOpen} className="btn btn-primary">
-          Open Cart <span className="glyphicon glyphicon-shopping-cart"></span>
+          Open Cart ({addToCartCount}) <span className="glyphicon glyphicon-shopping-cart"></span>
         </button>
       </div>
 
@@ -67,8 +69,6 @@ const Home = () => {
         ))}
       </div>
 
-      
-      
       <style>
         {`
           .product-image {

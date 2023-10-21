@@ -1,23 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  TextField,
-  Button,
-  Grid,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-} from '@mui/material';
-//Functional Component
+import React, { useState, useEffect } from 'react';
+
 const Workshop = () => {
-  //State Variables
   const [workshopData, setWorkshopData] = useState([]);
   const [teacherData, setTeacherData] = useState([]);
   const [formData, setFormData] = useState({
@@ -26,17 +9,12 @@ const Workshop = () => {
     location: '',
     teacher: '',
   });
-  /* workshopData stores the data of workshops. 
-    teacherData stores the data of teachers.
-    formData stores the data entered into the form.
-  */
 
-  // Data Fetching with useEffect
   useEffect(() => {
     fetchWorkshopData();
     fetchTeacherData();
   }, []);
-  //Data Fetching Functions
+
   const fetchWorkshopData = async () => {
     try {
       const response = await fetch('http://localhost:3000/workshop');
@@ -56,7 +34,7 @@ const Workshop = () => {
       console.error('Error fetching teacher data:', error);
     }
   };
- //Form Submission
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -70,9 +48,6 @@ const Workshop = () => {
       });
 
       if (response.ok) {
-        // Data successfully submitted
-        // Reset the form
-        // teacher colum is not make api
         setFormData({
           topic: '',
           date: '',
@@ -80,17 +55,15 @@ const Workshop = () => {
           teacher: '',
         });
 
-        // Fetch the updated workshop data
         fetchWorkshopData();
       } else {
-        // Handle error
         console.error('Error submitting workshop data:', response.statusText);
       }
     } catch (error) {
       console.error('Error submitting workshop data:', error);
     }
   };
-  //Form Input Handling
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -99,96 +72,84 @@ const Workshop = () => {
   };
 
   return (
-    <div>
+    <div className="container mt-5">
       <h1>Workshop</h1>
-
-      <Grid container component={Paper} sx={{ p: 2 }}>
-        <Grid item xs={12}>
-          <form onSubmit={handleSubmit}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={4}>
-                <TextField
-                  label="Topic"
-                  name="topic"
-                  value={formData.topic}
-                  onChange={handleChange}
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12} sm={4}>
-                <TextField
-                  label="Date"
-                  name="date"
-                  type="date"
-                  value={formData.date}
-                  onChange={handleChange}
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12} sm={4}>
-                <TextField
-                  label="Location"
-                  name="location"
-                  value={formData.location}
-                  onChange={handleChange}
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12} sm={4}>
-                <FormControl fullWidth>
-                  <InputLabel>Teacher</InputLabel>
-                  <Select
-                    name="teacher"
-                    value={formData.teacher}
-                    onChange={handleChange}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    {teacherData.map((teacher) => (
-                      <MenuItem key={teacher.teacher_id} value={teacher.teacher_name}>
-                        {teacher.teacher_name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={12}>
-                <Button type="submit" variant="contained" color="primary">
-                  Submit
-                </Button>
-              </Grid>
-            </Grid>
-          </form>
-        </Grid>
-      </Grid>
-
-      <TableContainer component={Paper} sx={{ mt: 2 }}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Topic</TableCell>
-              <TableCell>Date</TableCell>
-              <TableCell>Location</TableCell>
-              <TableCell>Teacher</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {workshopData.map((workshop) => (
-              <TableRow key={workshop.id}>
-                <TableCell>{workshop.id}</TableCell>
-                <TableCell>{workshop.topic}</TableCell>
-                <TableCell>{workshop.date}</TableCell>
-                <TableCell>{workshop.location}</TableCell>
-                <TableCell>{workshop.teacher}</TableCell>
-              </TableRow>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-3">
+          <label className="form-label">Topic</label>
+          <input
+            type="text"
+            className="form-control"
+            name="topic"
+            value={formData.topic}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Date</label>
+          <input
+            type="date"
+            className="form-control"
+            name="date"
+            value={formData.date}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Location</label>
+          <input
+            type="text"
+            className="form-control"
+            name="location"
+            value={formData.location}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Teacher</label>
+          <select
+            className="form-select"
+            name="teacher"
+            value={formData.teacher}
+            onChange={handleChange}
+          >
+            <option value="">Select Teacher</option>
+            {teacherData.map((teacher) => (
+              <option key={teacher.teacher_id} value={teacher.teacher_name}>
+                {teacher.teacher_name}
+              </option>
             ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+          </select>
+        </div>
+        <button type="submit" className="btn btn-primary">
+          Submit
+        </button>
+      </form>
+
+      <table className="table mt-5">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Topic</th>
+            <th scope="col">Date</th>
+            <th scope="col">Location</th>
+            <th scope="col">Teacher</th>
+          </tr>
+        </thead>
+        <tbody>
+          {workshopData.map((workshop) => (
+            <tr key={workshop.id}>
+              <td>{workshop.id}</td>
+              <td>{workshop.topic}</td>
+              <td>{workshop.date}</td>
+              <td>{workshop.location}</td>
+              <td>{workshop.teacher}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
 
-export default Workshop
+export default Workshop;

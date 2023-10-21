@@ -1,8 +1,50 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Menu.css'; // Import the CSS file
 
-const Menu = ({ isLoggedIn }) => {
+const Menu = ({ products, cartItems }) => {
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [cartItemNames, setCartItemNames] = useState([]);
+  const [cartItemPrices, setCartItemPrices] = useState([]);
+  const [cartItemImages, setCartItemImages] = useState([]);
+  const [cartItemQuantities, setCartItemQuantities] = useState([]);
+
+  const getProductsInCart = products.filter(product => cartItems.some(item => item.id === product.id));
+
+  useEffect(() => {
+    const names = cartItems.map(item => item.name);
+    const prices = cartItems.map(item => item.price);
+    const images = cartItems.map(item => item.product_image);
+    const quantities = Array(cartItems.length).fill(1); // Initialize quantities to 1 for each item
+
+    setCartItemNames(names);
+    setCartItemPrices(prices);
+    setCartItemImages(images);
+    setCartItemQuantities(quantities);
+  }, [cartItems]);
+
+  const handleIncrement = (index) => {
+    const updatedQuantities = [...cartItemQuantities];
+    updatedQuantities[index]++;
+    setCartItemQuantities(updatedQuantities);
+  };
+
+  const handleDecrement = (index) => {
+    const updatedQuantities = [...cartItemQuantities];
+    if (updatedQuantities[index] > 0) {
+      updatedQuantities[index]--;
+      setCartItemQuantities(updatedQuantities);
+    }
+  };
+
+  const calculateTotalAmount = () => {
+    let totalAmount = 0;
+    for (let i = 0; i < cartItems.length; i++) {
+      totalAmount += cartItemPrices[i] * cartItemQuantities[i];
+    }
+    return totalAmount;
+  };
+
   return (
     <nav className="menu">
       <ul className="menu-list">
@@ -19,29 +61,67 @@ const Menu = ({ isLoggedIn }) => {
           <Link to="/Admision" className="menu-link">Admission</Link>
         </li>
         <li className="menu-item">
-          <Link to="/upload" className="menu-link">Upload Image</Link> {/* New link for ImageUploadForm */}
+          <Link to="/upload" className="menu-link">Upload Image</Link>
         </li>
         <li className="menu-item">
           <Link to="/student" className="menu-link">Student Registration</Link>
         </li>
-        {/* <li className="menu-item">
-          <Link to="/dashboard" className="menu-link">Dashboard</Link>
-        </li> */}
-        {isLoggedIn ? null : (
-          <li className="menu-item" style={{ float: 'right' }}>
+        <li className="menu-item" style={{ float: 'right' }}>
             <Link to="/register" className="menu-link">Registration</Link>
           </li>
-        )}
-        {isLoggedIn ? null : (
           <li className="menu-item" style={{ float: 'right' }}>
             <Link to="/login" className="menu-link">Login</Link>
           </li>
-        )}
-        <li className="menu-item">
-        <Link to="/cart" className="menu-link">Cart</Link>
-      </li>
+        <li className="menu-item" style={{ float: 'right' }}>
+          <button
+            type="button"
+            className="btn btn-info btn-lg"
+            data-toggle="modal"
+            data-target="#menuModal"
+            onClick={() => setIsCartOpen(true)}
+          >
+            Cart Box <span className="glyphicon glyphicon-shopping-cart">{cartItems.length}</span>
+          </button>
+        </li>
       </ul>
+      {isCartOpen && (
+        <div className="modal fade" id="menuModal" role="dialog" style={{ display: 'block' }}>
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <button type="button" className="close" data-dismiss="modal" onClick={() => setIsCartOpen(false)}>&times;</button>
+                <h4 className="modal-title">Cart</h4>
+              </div>
+              <div className="modal-body">
+                <div className="row">
+                  {getProductsInCart.map((product, index) => (
+                    <div key={index} className="col-sm-4">
+                      <img src={`http://localhost:3000/${product.product_image}`} alt={product.name} />
+                      <h3>{product.name}</h3>
+                      <p>Price: {product.price}</p>
+                      <p>Quantity: {cartItemQuantities[index]}</p>
+                      <button onClick={() => handleIncrement(index)}>+</button>
+                      <button onClick={() => handleDecrement(index)}>-</button>
+                      <button onClick={() => console.log("Buy button clicked for", product.name)}>Buy</button>
+                    </div>
+                  ))}
+                </div>
+                <div className="row">
+                  <div className="col-sm-12">
+                    <h4>Total Amount: {calculateTotalAmount()}</h4>
+                  </div>
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-default" onClick={() => setIsCartOpen(false)}>Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    )}
+
     </nav>
+    
   );
 };
 

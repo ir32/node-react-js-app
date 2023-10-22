@@ -12,11 +12,13 @@ const Menu = ({ products, cartItems }) => {
   const getProductsInCart = products.filter(product => cartItems.some(item => item.id === product.id));
 
   useEffect(() => {
+    //array data iterate over an array and render a list of items
     const names = cartItems.map(item => item.name);
     const prices = cartItems.map(item => item.price);
     const images = cartItems.map(item => item.product_image);
     const quantities = Array(cartItems.length).fill(1); // Initialize quantities to 1 for each item
 
+    //new array create 
     setCartItemNames(names);
     setCartItemPrices(prices);
     setCartItemImages(images);
@@ -44,6 +46,7 @@ const Menu = ({ products, cartItems }) => {
     }
     return totalAmount;
   };
+  
 
   return (
     <nav className="menu">
@@ -93,23 +96,39 @@ const Menu = ({ products, cartItems }) => {
                 <h4 className="modal-title">Cart</h4>
               </div>
               <div className="modal-body">
-                <div className="row">
-                  {getProductsInCart.map((product, index) => (
-                    <div key={index} className="col-sm-4">
-                      <img src={`http://localhost:3000/${product.product_image}`} alt={product.name} />
-                      <h3>{product.name}</h3>
-                      <p>Price: {product.price}</p>
-                      <p>Quantity: {cartItemQuantities[index]}</p>
-                      <button onClick={() => handleIncrement(index)}>+</button>
-                      <button onClick={() => handleDecrement(index)}>-</button>
-                      <button onClick={() => console.log("Buy button clicked for", product.name)}>Buy</button>
+              {getProductsInCart.map((product, index) => (
+                    <div key={index} className="row align-items-center my-3">
+                      <div className="col-sm-2">
+                        <img
+                          src={`http://localhost:3000/${product.product_image}`}
+                          alt={product.name}
+                          style={{ maxWidth: '100%', height: 'auto' }}
+                        />
+                      </div>
+                      <div className="col-sm-3">
+                        <h3>{product.name}</h3>
+                      </div>
+                      <div className="col-sm-2">
+                        <p>Price: {product.price}</p>
+                      </div>
+                      <div className="col-sm-2">
+                        <p>Quantity: {cartItemQuantities[index]}</p>
+                      </div>
+                      <div className="col-sm-2">
+                        <button onClick={() => handleIncrement(index)}>+</button>
+                        <button onClick={() => handleDecrement(index)}>-</button>
+                      </div>
+                      
                     </div>
                   ))}
-                </div>
+
                 <div className="row">
                   <div className="col-sm-12">
                     <h4>Total Amount: {calculateTotalAmount()}</h4>
                   </div>
+                  <button style={{ marginRight: '5px' }} onClick={() => console.log("Buy button clicked for")}>
+                    Buy
+                  </button>
                 </div>
               </div>
               <div className="modal-footer">

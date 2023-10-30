@@ -1,21 +1,27 @@
 // Carousel.js
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 import { Carousel } from 'react-responsive-carousel';
-import "react-responsive-carousel/lib/styles/carousel.min.css";
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 const BannerCarousel = ({ banners }) => {
-  const carouselRef = useRef();
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const handleSelect = (selectedIndex) => {
+    setSelectedIndex(selectedIndex);
+  };
 
   const handleNext = () => {
-    carouselRef.current.next();
+    const nextIndex = (selectedIndex + 1) % banners.length;
+    setSelectedIndex(nextIndex);
   };
 
   const handlePrev = () => {
-    carouselRef.current.previous();
+    const prevIndex = selectedIndex === 0 ? banners.length - 1 : selectedIndex - 1;
+    setSelectedIndex(prevIndex);
   };
 
   return (
-    <div >
+    <div>
       <Carousel
         showThumbs={false}
         showStatus={false}
@@ -23,14 +29,15 @@ const BannerCarousel = ({ banners }) => {
         autoPlay={true}
         interval={2000}
         showArrows={true}
-        ref={carouselRef}
+        selectedItem={selectedIndex}
+        onChange={handleSelect}
       >
         {banners.map((banner) => (
           <div key={banner.id}>
             <img
               src={`http://localhost:3000${banner.image}`}
               alt={banner.product}
-              style={{ maxHeight: "400px", objectFit: "cover" }}
+              style={{ maxHeight: '400px', objectFit: 'cover' }}
             />
           </div>
         ))}

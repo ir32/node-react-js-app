@@ -14,32 +14,24 @@ const Home = ({ onAddToCart }) => {
   const [banners, setBanners] = useState([]);
 
   useEffect(() => {
-    // Fetch data from the API
-    axios.get('http://localhost:3000/getproducts')
-      .then((response) => {
-        setProducts(response.data);
-        //function setProducts
-      })
-      .catch((error) => {
+    const fetchData = async () => {
+      try {
+        const [productsResponse, newArrivalsResponse, bannersResponse] = await Promise.all([
+          axios.get('http://localhost:3000/getproducts'),
+          axios.get('https://fakestoreapi.com/products'),
+          axios.get('http://localhost:3000/get_banner')
+        ]);
+
+        setProducts(productsResponse.data);
+        setNewArrivals(newArrivalsResponse.data);
+        setBanners(bannersResponse.data);
+        console.log(bannersResponse);
+      } catch (error) {
         console.error('Error fetching data:', error);
-      });
-      axios.get('https://fakestoreapi.com/products')
-      .then((res) => {
-        console.log('Data from the second API:', res.data);
-        setNewArrivals(res.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
-  }, []);
-  useEffect(() => {
-    axios.get('http://localhost:3000/get_banner')
-      .then((response) => {
-        setBanners(response.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching banner data:', error);
-      });
+      }
+    };
+
+    fetchData();
   }, []);
 
   const handleAddToCart = (product) => {

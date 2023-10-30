@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../css/style.css';
 import '../css/product.css';
+import BannerCarousel from '../Banner/Carousel';
 
 // This is a functional component named Home that takes in a prop called onAddToCart.
 const Home = ({ onAddToCart }) => {
@@ -10,6 +11,8 @@ const Home = ({ onAddToCart }) => {
   This line declares a state variable products and a function setProducts to update it using the 
   useState hook. The initial value of products is an empty array [].*/
   const [newArrivals, setNewArrivals] = useState([]);
+  const [banners, setBanners] = useState([]);
+
   useEffect(() => {
     // Fetch data from the API
     axios.get('http://localhost:3000/getproducts')
@@ -29,7 +32,15 @@ const Home = ({ onAddToCart }) => {
         console.error('Error fetching data:', error);
       });
   }, []);
-
+  useEffect(() => {
+    axios.get('http://localhost:3000/get_banner')
+      .then((response) => {
+        setBanners(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching banner data:', error);
+      });
+  }, []);
 
   const handleAddToCart = (product) => {
     onAddToCart(product);
@@ -39,6 +50,9 @@ const Home = ({ onAddToCart }) => {
   return (
     <div>
       <div>
+        <div>      
+          <BannerCarousel banners={banners} />
+        </div>
         <h1 className="title">Mobile </h1>
         <div className="product-grid">
           {products.map((product, index) => (

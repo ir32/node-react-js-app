@@ -1,5 +1,5 @@
 // Carousel.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
@@ -10,15 +10,14 @@ const BannerCarousel = ({ banners }) => {
     setSelectedIndex(selectedIndex);
   };
 
-  const handleNext = () => {
-    const nextIndex = (selectedIndex + 1) % banners.length;
-    setSelectedIndex(nextIndex);
-  };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const nextIndex = (selectedIndex + 1) % banners.length;
+      setSelectedIndex(nextIndex);
+    }, 3000);
 
-  const handlePrev = () => {
-    const prevIndex = selectedIndex === 0 ? banners.length - 1 : selectedIndex - 1;
-    setSelectedIndex(prevIndex);
-  };
+    return () => clearInterval(interval);
+  }, [selectedIndex, banners.length]);
 
   return (
     <div>
@@ -26,7 +25,7 @@ const BannerCarousel = ({ banners }) => {
         showThumbs={false}
         showStatus={false}
         infiniteLoop={true}
-        autoPlay={true}
+        autoPlay={false}
         interval={2000}
         showArrows={true}
         selectedItem={selectedIndex}
@@ -42,10 +41,6 @@ const BannerCarousel = ({ banners }) => {
           </div>
         ))}
       </Carousel>
-      <div style={{ textAlign: 'center', marginTop: '20px' }}>
-        <button onClick={handlePrev}>Previous</button>
-        <button onClick={handleNext}>Next</button>
-      </div>
     </div>
   );
 };

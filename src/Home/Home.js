@@ -25,7 +25,7 @@ const Home = ({ onAddToCart }) => {
         setProducts(productsResponse.data);
         setNewArrivals(newArrivalsResponse.data);
         setBanners(bannersResponse.data);
-        console.log(bannersResponse);
+        console.log(bannersResponse.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }

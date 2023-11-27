@@ -25,7 +25,7 @@ const BannerCarousel = ({ banners }) => {
         showThumbs={false}
         showStatus={false}
         infiniteLoop={true}
-        autoPlay={false}
+        autoPlay={true} // Changed this attribute to true
         interval={2000}
         showArrows={true}
         selectedItem={selectedIndex}

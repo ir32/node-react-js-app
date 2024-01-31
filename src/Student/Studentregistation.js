@@ -68,7 +68,6 @@ const Studentregistation = () => {
             })
             .catch((error) => {
                 console.error('Error submitting data:', error);
-                // Handle errors (e.g., display an error message to the user).
             });
     };
 

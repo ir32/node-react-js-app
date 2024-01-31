@@ -13,6 +13,7 @@ import Studenttest from '../src/Dashboard/dashboard';
 import Prodcutitem from '../src/products/Productitem';
 import axios from 'axios';
 
+import Test from '../src/Student/Test';
 const App = () => {
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
@@ -52,6 +53,7 @@ const App = () => {
           <Route path="/student" element={<Studentregistation />} />
           <Route path="/dashboard" element={<Studenttest />} />
           <Route path="/products" element={<Prodcutitem />} />
+          <Route path="/test" element={<Test />} />
         </Routes>
       </div>
     </Router>

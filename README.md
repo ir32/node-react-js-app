@@ -1,11 +1,4 @@
 # Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
 ### `npm start`
 
 Runs the app in the development mode.\
@@ -19,4 +12,6 @@ The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
 ### `npm test`
+![image](https://github.com/ir32/node-react-js-app/assets/47362140/4b937ea9-5388-4d02-aa57-72db1f4a5e39)
 
+![image](https://github.com/ir32/node-react-js-app/assets/47362140/cb1cfad8-7ad7-4036-b604-72601794e568)

@@ -1,9 +1,12 @@
 // Home.js
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+
 import axios from 'axios';
 import '../css/style.css';
 import '../css/product.css';
 import BannerCarousel from '../Banner/Carousel';
+//import PaymentPage from '../payment/PaymentPage';
 
 // This is a functional component named Home that takes in a prop called onAddToCart.
 const Home = ({ onAddToCart }) => {
@@ -93,7 +96,11 @@ const Home = ({ onAddToCart }) => {
                 >
                   Add to Cart
                 </button>
-                <button className="buy-button">Buy</button>
+                <div className="button-container">
+                <Link to={`/payment/${product.id}`} className="buy-button">
+                  Buy
+                </Link>
+                </div>
               </div>
             </div>
           ))}

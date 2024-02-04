@@ -11,6 +11,8 @@ import Login from '../src/Login/Login';
 import Studentregistation from '../src/Student/Studentregistation';
 import Studenttest from '../src/Dashboard/dashboard';
 import Prodcutitem from '../src/products/Productitem';
+import PaymentPage from '../src/payment/PaymentPage';
+
 import axios from 'axios';
 
 import Test from '../src/Student/Test';
@@ -54,6 +56,7 @@ const App = () => {
           <Route path="/dashboard" element={<Studenttest />} />
           <Route path="/products" element={<Prodcutitem />} />
           <Route path="/test" element={<Test />} />
+          <Route path='/payment' element= {<PaymentPage/>} />
         </Routes>
       </div>
     </Router>

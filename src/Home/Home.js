@@ -38,9 +38,84 @@ const Home = ({ onAddToCart }) => {
 
   const handleAddToCart = (product) => {
     onAddToCart(product);
-    console.log(product); // Log the product value
+    console.log(product); 
   };
 
+  
+
+  const handleBuyClick = async (product) => {
+    const amount = product.price * 100;
+    const currency = 'INR';
+    //const receiptId = product.id.toString(); // Change this based on your product ID
+    const receiptId = "qwsaq1";
+
+    try {
+      const response = await fetch("http://localhost:3000/initiate_razorpay_payment", {
+        method: "POST",
+        body: JSON.stringify({
+          amount,
+          currency,
+          receipt: receiptId,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const order = await response.json();
+      
+      var options = {
+        key: order.key_id,
+        amount,
+        currency,
+        name: "Acme Corp",
+        description: "Test Transaction",
+        order_id: order.orderId,
+        handler: async function (response) {
+          const body = { ...response };
+
+          const validateRes = await fetch(
+            "http://localhost:3000/order/validate",
+            {
+              method: "POST",
+              body: JSON.stringify(body),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          const jsonRes = await validateRes.json();
+          console.log(jsonRes);
+        },
+        prefill: {
+          name: "Web Dev Matrix",
+          email: "alamirfan1092@gmail.com",
+          contact: "8240494754",
+        },
+        notes: {
+          address: "Razorpay Corporate Office",
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+
+      var rzp1 = new window.Razorpay(options);
+      rzp1.on("payment.failed", function (response) {
+        alert(response.error.code);
+        alert(response.error.description);
+        alert(response.error.source);
+        alert(response.error.step);
+        alert(response.error.reason);
+        alert(response.error.metadata.order_id);
+        alert(response.error.metadata.payment_id);
+      });
+      rzp1.open();
+    } catch (error) {
+      console.error("Error initiating payment:", error);
+    }
+  };
   return (
     <div>
       <div>
@@ -96,9 +171,11 @@ const Home = ({ onAddToCart }) => {
                   Add to Cart
                 </button>
                 <div className="button-container">
-                <Link to={`/payment`} className="buy-button">
-                  Buy
-                </Link>
+                
+                <button className="buy-button" onClick={() => handleBuyClick(product)}>
+                  Buy1
+                </button>
+                
                 </div>
               </div>
             </div>

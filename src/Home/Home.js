@@ -68,7 +68,7 @@ const Home = ({ onAddToCart }) => {
         key: order.key_id,
         amount,
         currency,
-        name: "Acme Corp",
+        name: "East India Company",
         description: "Test Transaction",
         order_id: order.orderId,
         handler: async function (response) {
